@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.platform.common.security.component.SecurityInnerAspect,\
+  com.platform.common.security.props.PermitAllUrlProperties,\
+  com.platform.common.security.config.TokenStoreConfig,\
+  com.platform.common.security.component.PermissionService,\
+  com.platform.common.security.util.TokenUtils,\
+  com.platform.common.security.component.AuthenticationConverter
+

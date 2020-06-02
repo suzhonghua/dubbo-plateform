@@ -1,0 +1,2 @@
+providerTokenFilter=com.platform.common.dubbo.filter.ProviderTokenFilter
+consumerTokenFilter=com.platform.common.dubbo.filter.ConsumerTokenFilter

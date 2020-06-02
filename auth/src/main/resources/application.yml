@@ -1,0 +1,7 @@
+server:
+  port: 9701
+dubbo:
+  application:
+    name: @artifactId@-@profiles.active@
+  config-center:
+    address: zookeeper://${ZOOKEEPER-HOST:registry}:${ZOOKEEPER-PORT:2181}

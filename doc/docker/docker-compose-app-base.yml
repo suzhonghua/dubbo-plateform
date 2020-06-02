@@ -1,0 +1,24 @@
+version: '3'
+services:
+  auth:
+    image: auth:1.0
+    container_name: auth
+    restart: always
+    external_links:
+      - mysql:mysql-db
+    depends_on: #dubbo check = false 可以去掉次配置
+      - upms-biz
+    expose:
+      - 9701
+    volumes:
+      - /opt/plateform/auth/logs/:/logs
+  upms-biz:
+    image: upms-biz:1.0
+    container_name: upms-biz
+    restart: always
+    external_links:
+      - mysql:mysql-db
+    expose:
+      - 9702
+    volumes:
+      - /opt/plateform/upms/logs/:/logs

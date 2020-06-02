@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!--统一token认证filter-->
+    <dubbo:provider filter="providerTokenFilter"/>
+
+    <!-- 日志provider -->
+    <bean id="logService" class="com.platform.upms.provider.LogServiceImpl"/>
+    <dubbo:service interface="com.platform.api.upms.service.LogService" ref="logService"/>
+
+    <!-- 用户信息provider -->
+    <bean id="userService" class="com.platform.upms.provider.UserServiceImpl"/>
+    <dubbo:service interface="com.platform.api.upms.service.UserService" ref="userService"/>
+
+</beans>

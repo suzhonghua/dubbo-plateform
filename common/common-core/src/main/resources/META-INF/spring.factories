@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.platform.common.core.config.JacksonConfig,\
+  com.platform.common.core.exception.GlobalExceptionHandler,\
+  com.platform.common.core.util.SpringContextHolder,\
+  com.platform.common.core.mybatis.WebMvcConfig

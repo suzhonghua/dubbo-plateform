@@ -1,0 +1,71 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root #root 账户密码
+    ports:
+      - 3306:3306
+    volumes:
+      - /opt/plateform/mysql/data/db:/var/lib/mysql #数据文件挂载
+      - /opt/plateform/mysql/data/conf:/etc/mysql/conf.d #配置文件挂载
+      - /opt/plateform/mysql/log:/var/log/mysql #日志文件挂载
+  zookeeper:
+    image: zookeeper:3.6.1
+    container_name: zookeeper
+    restart: always
+    ports:
+      - 2181:2181
+    volumes:
+      - /opt/plateform/zookeeper/conf/zoo.cfg:/conf/zoo.cfg
+      - /opt/plateform/zookeeper/data:/data
+      - /opt/plateform/zookeeper/log:/datalog
+  dubbo-admin:
+    image: dubbo-admin:2.7
+    container_name: dubbo-admin
+    links:
+      - zookeeper:registry
+    depends_on:
+      - zookeeper
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      admin.config-center: zookeeper://registry
+      admin.root.user.name: admin
+      admin.root.user.password: admin
+#  nginx:
+#    image: nginx:1.18
+#    container_name: nginx
+#    restart: always
+#    volumes:
+#      - /opt/plateform/nginx:/etc/nginx #配置文件挂载
+#      - /opt/plateform/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
+#      - /opt/plateform/nginx/log:/var/log/nginx #日志文件挂载
+#    ports:
+#      - 80:80
+
+# -----------------------------------------------------以下需要提前配置--------------------------------------------------
+
+# Nginx
+# docker pull nginx:1.18
+
+# docker run -p 80:80 --name nginx \
+# -v /opt/plateform/nginx/html:/usr/share/nginx/html \
+# -v /opt/plateform/nginx/logs:/var/log/nginx  \
+# -d nginx:1.18
+
+# docker container cp nginx:/etc/nginx /opt/plateform/
+
+# docker stop nginx
+# docker rm nginx
+
+# zookeeper 考出配置文件
+# docker pull zookeeper:3.6.1
+# docker run -d --name zookeeper --restart always zookeeper:3.6.1
+# docker cp -a zookeeper:/conf/zoo.cfg /opt/plateform/zookeeper/conf/zoo.cfg
+# docker stop zookeeper
+# docker rm zookeeper
